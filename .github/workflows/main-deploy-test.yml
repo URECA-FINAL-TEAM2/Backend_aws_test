@@ -42,11 +42,14 @@ jobs:
           echo "${{ secrets.APPLICATION }}" > ./application.yml
         shell: bash
 
+      - name: Run chmod to make gradlew executeable
+        run: chmod +x ./gradlew
+
       # Gradle로 빌드 실행
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: build
+          arguments: clean build -x test
 
       # AWS에 연결
       - name: Connect to AWS
